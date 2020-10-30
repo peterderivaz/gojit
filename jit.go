@@ -5,7 +5,7 @@ package gojit
 
 import (
 	"github.com/edsrzf/mmap-go"
-	_ "github.com/nelhage/gojit/cgo"
+	_ "github.com/peterderivaz/gojit/cgo"
 	"reflect"
 	"unsafe"
 )
@@ -34,16 +34,28 @@ func Addr(b []byte) uintptr {
 	return hdr.Data
 }
 
+// Addr returns the address in memory of a uint32 slice, as a uintptr
+func Addr32(b []uint32) uintptr {
+	hdr := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+	return hdr.Data
+}
+
 // Build returns a nullary golang function that will result in jumping
 // into the specified byte slice. The slice should in most cases be a
 // slice returned by Alloc, although you could also use syscall.Mmap
 // or syscall.Mprotect directly.
-func Build(b []byte) func() {
-	dummy := jitcall
-	fn := &struct {
+type tramp_t struct {
 		trampoline uintptr
 		jitcode    uintptr
-	}{**(**uintptr)(unsafe.Pointer(&dummy)), Addr(b)}
+    data       uintptr
+}
+
+var JitData []uint32
+
+func Build(b []byte) func() {
+  JitData = append(JitData,100) // TODO remove
+	dummy := jitcall
+	fn := &tramp_t{**(**uintptr)(unsafe.Pointer(&dummy)), Addr(b), Addr32(JitData)}
 
 	return *(*func())(unsafe.Pointer(&fn))
 }

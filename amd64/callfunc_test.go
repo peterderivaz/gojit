@@ -1,12 +1,12 @@
 package amd64
 
 import (
-	"runtime"
 	"testing"
 
-	"github.com/nelhage/gojit"
+	"github.com/peterderivaz/gojit"
 )
 
+/*Uses CGo
 func TestCallFunc(t *testing.T) {
 	asm := newAsm(t)
 	defer gojit.Release(asm.Buf)
@@ -63,6 +63,7 @@ func TestGCInCallback(t *testing.T) {
 
 	jitf()
 }
+*/
 
 func BenchmarkGoCall(b *testing.B) {
 	asm, _ := NewGoABI(gojit.PageSize)
@@ -81,6 +82,7 @@ func BenchmarkGoCall(b *testing.B) {
 	}
 }
 
+/*
 func BenchmarkCgoCall(b *testing.B) {
 	asm, _ := New(gojit.PageSize)
 	defer asm.Release()
@@ -97,3 +99,4 @@ func BenchmarkCgoCall(b *testing.B) {
 		jit()
 	}
 }
+*/

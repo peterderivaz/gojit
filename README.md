@@ -13,17 +13,6 @@ golang code. This repository contains several packages:
 
    Contains a simplistic amd64 assembler designed for use with `gojit`
 
-- `bf`
-
-   Contains a just-in-time compiler for
-   [Brainfuck](http://esolangs.org/wiki/Brainfuck) that demos the
-   above packages
-
-- `gobf`
-
-   Contains a binary that provides a command-line interface to `bf`
-
-
 ## Using
 
 `gobf` can be fetched using

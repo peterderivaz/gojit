@@ -1,7 +1,7 @@
 // Package amd64 implements a simple amd64 assembler.
 package amd64
 
-import "github.com/nelhage/gojit"
+import "github.com/peterderivaz/gojit"
 
 type ABI int
 
@@ -43,7 +43,7 @@ func (a *Assembler) Release() {
 func (a *Assembler) BuildTo(out interface{}) {
 	switch a.ABI {
 	case CgoABI:
-		gojit.BuildToCgo(a.Buf, out)
+		gojit.BuildToCgo(a.Buf, out) 
 	case GoABI:
 		gojit.BuildTo(a.Buf, out)
 	default:

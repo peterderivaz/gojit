@@ -3,7 +3,7 @@ package amd64
 import (
 	"testing"
 
-	"github.com/nelhage/gojit"
+	"github.com/peterderivaz/gojit"
 )
 
 //   48 89 fe             	mov    %rdi,%rsi
@@ -32,7 +32,7 @@ func finish(a *Assembler) func(uintptr) uintptr {
 func newAsm(t testing.TB) *Assembler {
 	buf, e := gojit.Alloc(gojit.PageSize)
 	if e != nil {
-		t.Fatalf("alloc: ", e.Error())
+		t.Fatalf("alloc: %s", e.Error())
 	}
 	return &Assembler{buf, 0, CgoABI}
 }

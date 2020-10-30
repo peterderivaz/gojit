@@ -8,7 +8,8 @@ import (
 func (a *Assembler) CallFunc(f interface{}) {
 	switch a.ABI {
 	case CgoABI:
-		a.CallFuncCgo(f)
+    panic("Unsupported due to linker error")
+		//a.CallFuncCgo(f)
 	case GoABI:
 		a.CallFuncGo(f)
 	default:
@@ -39,7 +40,7 @@ func (a *Assembler) CallFuncGo(f interface{}) {
 //
 // All registers are caller-save in the 6c ABI, and so all registers
 // should be assumed clobbered across a CallFunc.
-func (a *Assembler) CallFuncCgo(f interface{}) {
+/*func (a *Assembler) CallFuncCgo(f interface{}) {
 	if reflect.TypeOf(f).Kind() != reflect.Func {
 		panic("CallFunc: Can't call non-func")
 	}
@@ -62,7 +63,7 @@ func (a *Assembler) CallFuncCgo(f interface{}) {
 	a.MovAbs(uint64(get_runtime_cgocallback_gofunc()), Rax)
 	a.Call(Rax)
 	a.Add(Imm{24}, Rsp)
-}
+}*/
 
 func calculateFramesize(f interface{}) uintptr {
 	t := reflect.TypeOf(f)

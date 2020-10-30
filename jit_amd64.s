@@ -9,10 +9,11 @@ TEXT ·cgocall(SB),NOSPLIT,$16
         MOVQ AX, 8(SP)
         MOVQ 8(DX), AX
         MOVQ AX, 0(SP)
-        CALL runtime·cgocall(SB)
+        // This stops cgo from working, but avoids linker error CALL runtime·cgocall(SB)
         RET
 
 TEXT ·jitcall(SB),NOSPLIT,$0
         LEAQ argframe+0(FP), DI
         MOVQ 8(DX), AX
+        MOVQ 16(DX), BX
         JMP AX
