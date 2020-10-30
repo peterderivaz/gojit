@@ -167,6 +167,23 @@ func (a *Assembler) Shl(src, dst Operand) {
 	a.Arithmetic(InstShl, src, dst)
 }
 
+func (a *Assembler) Shr(src, dst Operand) {
+	a.Arithmetic(InstShr, src, dst)
+}
+
+func (a *Assembler) Sal(src, dst Operand) {
+	a.Arithmetic(InstSal, src, dst)
+}
+
+func (a *Assembler) Sar(src, dst Operand) {
+	a.Arithmetic(InstSar, src, dst)
+}
+
+func (a *Assembler) SegFault() {
+  // This uses a shift with more zeros so confuses instruction decode
+	a.Arithmetic(InstSegFault, Imm{4}, Eax)
+}
+
 func (a *Assembler) Int3() {
 	a.byte(0xcc)
 }

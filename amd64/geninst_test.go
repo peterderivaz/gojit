@@ -241,7 +241,7 @@ func TestShl( t *testing.T) {
       panic(err)
   }
   asm.Mov(Imm{42},Rax)
-  //asm.Shl(Imm{2},Rax) // src,dst
+  asm.Shl(Imm{2},Rax) // src,dst
   asm.Mov(Rax,Indirect{Rbx, 0, 64})
   asm.Ret()
   var f1 func()

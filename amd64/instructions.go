@@ -73,8 +73,12 @@ var (
 	InstXor   = &Instruction{"xor", no{}, ImmRm{j{0x81}, 6}, j{0x31}, j{0x33}, 64}
 	InstXorb  = asByteInsn(InstXor)
   // 4-588
-  InstShl   = &Instruction{"shl", no{}, ImmRm{j{0xc0}, 4}, no{}, no{}, 64}
-	
+  InstShl   = &Instruction{"shl", no{}, ImmRm{j{0xc1}, 4}, no{}, no{}, 8}
+  InstSal   = &Instruction{"shl", no{}, ImmRm{j{0xc1}, 4}, no{}, no{}, 8}
+  InstSegFault = &Instruction{"shl", no{}, ImmRm{j{0xc0}, 4}, no{}, no{}, 64}
+  InstSar   = &Instruction{"sar", no{}, ImmRm{j{0xc1}, 7}, no{}, no{}, 8}
+  InstShr   = &Instruction{"sar", no{}, ImmRm{j{0xc1}, 5}, no{}, no{}, 8}
+  
 	InstLea  = &Instruction{"lea", no{}, ImmRm{no{}, 0}, no{}, j{0x8D}, 64}
 	InstMov  = &Instruction{"mov", j{0xB8}, ImmRm{j{0xc7}, 0}, j{0x89}, j{0x8b}, 64}
 	InstMovb = asByteInsn(InstMov)
