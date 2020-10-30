@@ -215,7 +215,7 @@ func TestMovEsp(t *testing.T) {
 	}*/
 }
 
-func TestPointers( t *testing.T) {
+func TestMemWrite( t *testing.T) {
   //var x uint32 = 5
   //var y uintptr = uintptr(unsafe.Pointer(&x))
   asm, err := NewGoABI(gojit.PageSize)
@@ -223,6 +223,26 @@ func TestPointers( t *testing.T) {
       panic(err)
   }
   asm.Mov(Imm{42},Indirect{Rbx, 0, 64})
+  asm.Ret()
+  var f1 func()
+  asm.BuildTo(&f1)
+  f1()
+  if gojit.JitData[0] != 42{
+    t.Errorf("JitData[0] is %d",gojit.JitData[0])
+  }
+  asm.Release()
+}
+
+func TestShl( t *testing.T) {
+  //var x uint32 = 5
+  //var y uintptr = uintptr(unsafe.Pointer(&x))
+  asm, err := NewGoABI(gojit.PageSize)
+  if err != nil {
+      panic(err)
+  }
+  asm.Mov(Imm{42},Rax)
+  //asm.Shl(Imm{2},Rax) // src,dst
+  asm.Mov(Rax,Indirect{Rbx, 0, 64})
   asm.Ret()
   var f1 func()
   asm.BuildTo(&f1)

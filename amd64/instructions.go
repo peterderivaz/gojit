@@ -72,7 +72,9 @@ var (
 	InstTestb = asByteInsn(InstTest)
 	InstXor   = &Instruction{"xor", no{}, ImmRm{j{0x81}, 6}, j{0x31}, j{0x33}, 64}
 	InstXorb  = asByteInsn(InstXor)
-
+  // 4-588
+  InstShl   = &Instruction{"shl", no{}, ImmRm{j{0xc0}, 4}, no{}, no{}, 64}
+	
 	InstLea  = &Instruction{"lea", no{}, ImmRm{no{}, 0}, no{}, j{0x8D}, 64}
 	InstMov  = &Instruction{"mov", j{0xB8}, ImmRm{j{0xc7}, 0}, j{0x89}, j{0x8b}, 64}
 	InstMovb = asByteInsn(InstMov)
