@@ -63,7 +63,9 @@ func (asm *Assembler) Arithmetic(insn *Instruction, src, dst Operand) {
 		}
 		if insn.bits == 8 {
 			asm.byte(byte(s.Val))
-		} else {
+		} else if insn.bits == 0 {
+      // Used by multiply
+    } else {
 			asm.int32(uint32(s.Val))
 		}
 		return
@@ -177,6 +179,11 @@ func (a *Assembler) Sal(src, dst Operand) {
 
 func (a *Assembler) Sar(src, dst Operand) {
 	a.Arithmetic(InstSar, src, dst)
+}
+
+// Multiplies dst * AX and places results in DX:AX
+func (a *Assembler) Mul(dst Operand) {
+	a.Arithmetic(InstMul, Imm{0}, dst)
 }
 
 func (a *Assembler) SegFault() {
