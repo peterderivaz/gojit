@@ -53,7 +53,6 @@ type tramp_t struct {
 var JitData []uint32
 
 func Build(b []byte) func() {
-  JitData = append(JitData,100) // TODO remove
 	dummy := jitcall
 	fn := &tramp_t{**(**uintptr)(unsafe.Pointer(&dummy)), Addr(b), Addr32(JitData)}
 

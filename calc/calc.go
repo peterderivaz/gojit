@@ -12,16 +12,17 @@ import (
 )
 
 func main() {
+  gojit.JitData = append(gojit.JitData,100) // Prepare some space
   for x := 0; x < 10;x++ {
     asm, err := NewGoABI(gojit.PageSize)
     if err != nil {
         panic(err)
     }
     //asm.Mov(Imm{int32(x)},Eax)
-    asm.Mov(Imm{int32(-0x80000000)},Eax)
+    asm.Mov(Imm{int32(1)},Ecx)
     //asm.Mov(Indirect{Rbx, 0, 32},Eax)
-    asm.Sar(Imm{int32(x)},Eax) // src,dst
-    asm.Mov(Eax,Indirect{Rbx, 0, 32})
+    asm.Shl(Imm{int32(x)},Ecx) // src,dst
+    asm.Mov(Ecx,Indirect{Rbx, 0, 32})
     //asm.SegFault()
     asm.Ret()
     var f1 func()
