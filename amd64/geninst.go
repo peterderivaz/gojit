@@ -33,7 +33,7 @@ func (asm *Assembler) arithmeticImmReg(insn *Instruction, src Imm, dst Register)
 		asm.rex(false, false, false, dst.Val > 7)
 		asm.byte(insn.imm_r.value() | (dst.Val & 7))
 	} else {
-		asm.rex(dst.Bits == 64, false, dst.Val > 7, false)
+		asm.rex(dst.Bits == 64, false, false, dst.Val > 7) // This used to be the overway round but doesn't disassemble correctly for shl 15,r8d
 		asm.byte(insn.imm_rm.op.value())
 		asm.modrm(MOD_REG, insn.imm_rm.sub, dst.Val&7)
 	}
